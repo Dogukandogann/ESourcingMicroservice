@@ -13,13 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{F3AA15
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{AF6A9EC1-D20C-46B3-93B9-FB9C3E5B8390}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESourcing.Products", "Services\Products\ESourcing.Products\ESourcing.Products.csproj", "{1BE0C5C4-B590-4699-9FC7-D671DE879A20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESourcing.Products", "Services\Products\ESourcing.Products\ESourcing.Products.csproj", "{1BE0C5C4-B590-4699-9FC7-D671DE879A20}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A4B1AC4A-DC36-486E-BBF7-D8D7272BFE0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{C368B869-5421-4302-A4C0-8DC81731FE7A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sourcing", "Sourcing", "{0DF5DEB4-3711-4F19-8929-E0686704B90B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C08B4D3F-2A33-4CCF-93C1-2F74436ECABD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{1BE0C5C4-B590-4699-9FC7-D671DE879A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BE0C5C4-B590-4699-9FC7-D671DE879A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BE0C5C4-B590-4699-9FC7-D671DE879A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C08B4D3F-2A33-4CCF-93C1-2F74436ECABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C08B4D3F-2A33-4CCF-93C1-2F74436ECABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C08B4D3F-2A33-4CCF-93C1-2F74436ECABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C08B4D3F-2A33-4CCF-93C1-2F74436ECABD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

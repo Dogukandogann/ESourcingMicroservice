@@ -2,6 +2,7 @@
 using ESourcing.Products.Entities;
 using ESourcing.Products.Settings;
 using MongoDB.Driver;
+using System;
 
 namespace ESourcing.Products.Data
 {
@@ -9,11 +10,14 @@ namespace ESourcing.Products.Data
     {
         public ProductContext(IProductDbSettings _productDbSettings)
         {
-            var client = new MongoClient(_productDbSettings.ConnectionStrings);
+            var client = new MongoClient(_productDbSettings.ConnectionString);
             var database = client.GetDatabase(_productDbSettings.DatabaseName);
-            var products = database.GetCollection<Product>(_productDbSettings.CollectionName);
-            //ProductContextSeed.Seeddata
+
+            Products = database.GetCollection<Product>(_productDbSettings.CollectionName);
+            ProductContextSeed.SeedData(Products);
+            
         }
+        
         public IMongoCollection<Product> Products { get;}
     }
 }

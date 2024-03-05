@@ -11,6 +11,7 @@ namespace ESourcing.Products.Repositories
     {
         private readonly IProductContext _productContext;
 
+        
         public ProductRepository(IProductContext productContext)
         {
             _productContext = productContext;
@@ -38,12 +39,14 @@ namespace ESourcing.Products.Repositories
         {
             var filter = Builders<Product>.Filter.ElemMatch(p => p.Name, name);
             return await _productContext.Products.Find(filter).ToListAsync();
+
         }
 
         public async Task<IEnumerable<Product>> GetProducts()
         {
             return await _productContext.Products.Find(p => true).ToListAsync();
         }
+   
 
         public async Task<Product> GetProduct(string id)
         {

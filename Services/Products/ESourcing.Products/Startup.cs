@@ -33,11 +33,26 @@ namespace ESourcing.Products
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            #region Configuration Dependencies
             services.Configure<ProductDbSettings>(Configuration.GetSection(nameof(ProductDbSettings)));
-            services.AddSingleton<IProductDbSettings>(sp=>sp.GetRequiredService<IOptions<ProductDbSettings>>().Value);
-            services.AddTransient<IProductContext, ProductContext>();
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddSingleton<IProductDbSettings>(sp => sp.GetRequiredService<IOptions<ProductDbSettings>>().Value);
+            #endregion
+
+            #region Project Dependencies
+            services.AddScoped<IProductContext, ProductContext>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            #endregion
+
+
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "ESourcing.Products",
+                    Version = "v1"
+                }));
+            
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
