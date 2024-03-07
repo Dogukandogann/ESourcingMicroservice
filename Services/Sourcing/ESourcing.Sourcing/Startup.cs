@@ -35,6 +35,7 @@ namespace ESourcing.Sourcing
             services.AddSingleton<ISourcingDbSettings>(sp => sp.GetRequiredService<IOptions<SourcingDbSettings>>().Value);
             services.AddTransient<ISourcingContext, SourcingContext>();
             services.AddTransient<IAuctionRepository, AuctionRepository>();
+            services.AddTransient<IBidRepository, BidRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
