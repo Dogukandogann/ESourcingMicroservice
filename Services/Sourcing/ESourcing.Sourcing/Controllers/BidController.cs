@@ -13,7 +13,6 @@ namespace ESourcing.Sourcing.Controllers
     public class BidController : ControllerBase
     {
         private readonly IBidRepository _bidRepository;
-        private readonly ILogger<BidController> _logger;
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]

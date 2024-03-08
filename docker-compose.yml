@@ -9,3 +9,10 @@ services:
     build:
       context: .
       dockerfile: Services/Products/ESourcing.Products/Dockerfile
+
+  esourcing.sourcing:
+    image: ${DOCKER_REGISTRY-}esourcingsourcing
+    build:
+      context: .
+      dockerfile: Services/Sourcing/ESourcing.Sourcing/Dockerfile
+
