@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Sourcing/ESourcing.Sourcing/ESourcing.Sourcing.csproj", "Services/Sourcing/ESourcing.Sourcing/"]
+COPY ["Services/Common/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "Services/Common/EventBusRabbitMQ/"]
 RUN dotnet restore "./Services/Sourcing/ESourcing.Sourcing/ESourcing.Sourcing.csproj"
 COPY . .
 WORKDIR "/src/Services/Sourcing/ESourcing.Sourcing"
