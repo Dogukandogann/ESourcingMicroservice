@@ -48,6 +48,7 @@ namespace ESourcing.Order
             });
 
             services.AddSingleton<EventBusOrderCreateConsumer>();
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddSwaggerGen(c =>
             {

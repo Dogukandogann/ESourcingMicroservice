@@ -16,7 +16,7 @@ namespace ESourcing.Order.Extensions
             Listener = app.ApplicationServices.GetService<EventBusOrderCreateConsumer>();
             var lifeTime = app.ApplicationServices.GetService<IHostApplicationLifetime>();
             lifeTime.ApplicationStarted.Register(OnStarted);
-            lifeTime.ApplicationStarted.Register(OnStopping);
+            lifeTime.ApplicationStopping.Register(OnStopping);
 
             return app;
         }

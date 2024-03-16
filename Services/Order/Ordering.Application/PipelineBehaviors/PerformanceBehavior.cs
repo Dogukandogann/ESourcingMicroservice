@@ -13,6 +13,7 @@ namespace Ordering.Application.PipelineBehaviors
         public PerformanceBehavior(ILogger<TResponse> logger)
         {
             _logger = logger;
+            _timer = new Stopwatch();
         }
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
