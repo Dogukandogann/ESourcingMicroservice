@@ -72,3 +72,21 @@ services:
     ports:
       - "8002:80"
 
+
+  esourcing.apigateway:
+    container_name: "esourcingapigateway"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - esourcing.products
+      - esourcing.sourcing
+      - esourcing.order
+    volumes:
+      - ${HOME}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+    ports:
+      - "5000:80"
+    
+    
+
