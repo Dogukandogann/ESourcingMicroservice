@@ -29,3 +29,10 @@ services:
       context: .
       dockerfile: Services/Order/ESourcing.Order/Dockerfile
 
+
+  esourcing.apigateway:
+    image: ${DOCKER_REGISTRY-}esourcingapigateway
+    build:
+      context: .
+      dockerfile: Services/APIGateway/ESourcing.APIGateway/Dockerfile
+

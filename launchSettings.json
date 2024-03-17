@@ -6,7 +6,8 @@
       "serviceActions": {
         "esourcing.products": "StartDebugging",
         "esourcing.sourcing": "StartDebugging",
-        "esourcing.order": "StartDebugging"
+        "esourcing.order": "StartDebugging",
+        "esourcing.apigateway": "StartDebugging"
       }
     }
   }
