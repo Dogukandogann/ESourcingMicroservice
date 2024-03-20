@@ -1,5 +1,6 @@
 ﻿using ESourcing.Core.Entities;
 using ESourcing.UI.VievModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace ESourcing.UI.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -26,8 +27,25 @@ namespace ESourcing.UI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(LoginVM loginVM)
+        public async Task<IActionResult> Login(LoginVM loginVM,string returnUrl)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(loginVM.Email);
+                if (user != null)
+                {
+                    await _signInManager.SignOutAsync();
+                    var result = await _signInManager.PasswordSignInAsync(user,loginVM.Password,false,false);
+                    if (result.Succeeded)
+                        //return RedirectToAction("Index");
+                    return LocalRedirect(returnUrl);
+                    else
+                        ModelState.AddModelError("", "Email address or password is not valid");
+                }
+                else
+                    ModelState.AddModelError("", "Email address or password is not valid");
+            }
             return View();
         }
         public IActionResult SignUp()
@@ -68,6 +86,11 @@ namespace ESourcing.UI.Controllers
             }
             
             return View(signupModel);
+        }
+        public IActionResult Logout()
+        {
+            _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
         }
     }
 }
