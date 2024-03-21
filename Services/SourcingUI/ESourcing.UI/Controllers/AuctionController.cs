@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ESourcing.UI.VievModel;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace ESourcing.UI.Controllers
 {
@@ -6,7 +8,8 @@ namespace ESourcing.UI.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            List<AuctionVM> vM = new List<AuctionVM>();
+            return View(vM);
         }
     }
 }
