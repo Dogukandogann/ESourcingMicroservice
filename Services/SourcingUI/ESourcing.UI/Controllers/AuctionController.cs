@@ -11,5 +11,16 @@ namespace ESourcing.UI.Controllers
             List<AuctionVM> vM = new List<AuctionVM>();
             return View(vM);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(AuctionVM model)
+        {
+            return View();
+        }
     }
+    
 }
