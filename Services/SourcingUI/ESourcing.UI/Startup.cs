@@ -1,5 +1,9 @@
 using ESourcing.Core.Entities;
+using ESourcing.Core.Repositories;
+using ESourcing.Core.Repositories.Base;
 using ESourcing.Infrastructure.Data;
+using ESourcing.Infrastructure.Repository;
+using ESourcing.Infrastructure.Repository.Base;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +45,9 @@ namespace ESourcing.UI
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddMvc();
             services.AddRazorPages();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+
             //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opt=>
             //{
             //    opt.Cookie.Name = "My Cookie";
@@ -54,6 +61,7 @@ namespace ESourcing.UI
                 opt.LoginPath = $"/Home/Login";
                 opt.LogoutPath = $"/Home/Logout";
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
