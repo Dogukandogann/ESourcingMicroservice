@@ -52,14 +52,22 @@ namespace ESourcing.Sourcing
             {
                 var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
                 var factory = new ConnectionFactory() { HostName = Configuration["EventBus:HostName"] };
-                var retryCount = 5;
-                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:UserName"]) && !string.IsNullOrWhiteSpace(Configuration["EventBus:Password"]) && !string.IsNullOrWhiteSpace(Configuration["EventBus:RetryCount"]))
+                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:UserName"]))
                 {
                     factory.UserName = Configuration["EventBus:UserName"];
-                    factory.Password = Configuration["EventBus:Password"];
+                }
+
+                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:Password"]))
+                {
+                    factory.UserName = Configuration["EventBus:Password"];
+                }
+
+                var retryCount = 5;
+                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:RetryCount"]))
+                {
                     retryCount = int.Parse(Configuration["EventBus:RetryCount"]);
                 }
-                
+
                 return new DefaultRabbitMQPersistentConnection(factory,retryCount,logger);
             });
             services.AddSingleton<EventBusRabbitMQProducer>();

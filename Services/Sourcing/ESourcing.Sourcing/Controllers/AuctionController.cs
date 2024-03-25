@@ -60,7 +60,7 @@ namespace ESourcing.Sourcing.Controllers
         [ProducesResponseType(typeof(Auction), (int)HttpStatusCode.Created)]
         public async Task<ActionResult<Auction>> Create([FromBody] Auction auction)
         {
-           await _auctionRepository.Create(auction);
+            await _auctionRepository.Create(auction);
             return CreatedAtRoute("GetAuction",new {id=auction.Id},auction);
         }
 

@@ -38,6 +38,7 @@ namespace ESourcing.UI.Controllers
                     await _signInManager.SignOutAsync();
                     var result = await _signInManager.PasswordSignInAsync(user,loginVM.Password,false,false);
                     if (result.Succeeded)
+
                         //return RedirectToAction("Index");
                     return LocalRedirect(returnUrl);
                     else
