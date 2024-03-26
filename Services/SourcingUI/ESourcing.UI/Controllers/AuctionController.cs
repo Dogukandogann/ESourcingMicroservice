@@ -13,18 +13,20 @@ namespace ESourcing.UI.Controllers
         private readonly IUserRepository _userRepository;
         private readonly ProductClient _productClient;
         private readonly AuctionClient _auctionClient;
+        private readonly BidClient _bidClient;
 
-        public AuctionController(IUserRepository userRepository, ProductClient productClient, AuctionClient auctionClient)
+        public AuctionController(IUserRepository userRepository, ProductClient productClient, AuctionClient auctionClient, BidClient bidClient)
         {
             _userRepository = userRepository;
             _productClient = productClient;
             _auctionClient = auctionClient;
+            _bidClient = bidClient;
         }
 
         public async Task<IActionResult> Index()
         {
             var auictionList = await _auctionClient.GetAuctions();
-            return View();
+            return View(auictionList.Data);
         }
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -46,9 +48,18 @@ namespace ESourcing.UI.Controllers
                 return RedirectToAction("Index");
             return View();
         }
-        public IActionResult Detail()
+        public async Task<IActionResult> Detail(string id)
         {
-            return View();
+            AuctionBidsVM model = new AuctionBidsVM();
+
+            var auctionResponse = await _auctionClient.GetAuctionById(id);
+            var bidsReponse = await _bidClient.GetAllBidsByAuctionId(id);
+
+            model.SellerUserName = HttpContext.User?.Identity.Name;
+            model.AuctionId = auctionResponse.Data.Id;
+            model.ProductId = auctionResponse.Data.ProductId;
+            model.Bids = bidsReponse.Data;
+            return View(model);
         }
     }
     

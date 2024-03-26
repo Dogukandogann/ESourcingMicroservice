@@ -37,7 +37,7 @@ namespace ESourcing.UI.Clients
             }
             return new Result<AuctionVM>(false, ResultConstant.RecordNotCreatSuccessfully);
         }
-        public async Task<Result<List<AuctionVM>>> GetAuctions(AuctionVM auctionVievModel)
+        public async Task<Result<List<AuctionVM>>> GetAuctions()
         {
             var response = await _client.GetAsync("/api/v1/Auction");
             if (response.IsSuccessStatusCode)
@@ -49,6 +49,19 @@ namespace ESourcing.UI.Clients
                 return new Result<List<AuctionVM>>(false, ResultConstant.RecordNotFound);
             }
             return new Result<List<AuctionVM>>(false, ResultConstant.RecordNotFound);
+        }
+        public async Task<Result<AuctionVM>> GetAuctionById(string id)
+        {
+            var response = await _client.GetAsync("/api/v1/Auction"+id);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<AuctionVM>(responseData);
+                if (result is not null)
+                    return new Result<AuctionVM>(true, ResultConstant.RecordFound, result);
+                return new Result<AuctionVM>(false, ResultConstant.RecordNotFound);
+            }
+            return new Result<AuctionVM>(false, ResultConstant.RecordNotFound);
         }
     }
 }

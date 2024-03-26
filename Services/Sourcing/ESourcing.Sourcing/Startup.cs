@@ -1,4 +1,5 @@
 using ESourcing.Sourcing.Data;
+using ESourcing.Sourcing.Hubs;
 using ESourcing.Sourcing.Repository;
 using ESourcing.Sourcing.Repository.Interfaces;
 using ESourcing.Sourcing.Settings;
@@ -71,6 +72,12 @@ namespace ESourcing.Sourcing
                 return new DefaultRabbitMQPersistentConnection(factory,retryCount,logger);
             });
             services.AddSingleton<EventBusRabbitMQProducer>();
+            services.AddCors(o=>o.AddPolicy("CorsPolicy",builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:44334");
+                
+            }));
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,9 +92,11 @@ namespace ESourcing.Sourcing
 
             app.UseAuthorization();
             app.UseDeveloperExceptionPage();
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<AuctionHub>("/auctionhub");
                 endpoints.MapControllers();
             });
 
@@ -96,6 +105,7 @@ namespace ESourcing.Sourcing
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sourcing API V1");
             });
+            
         }
     }
 }

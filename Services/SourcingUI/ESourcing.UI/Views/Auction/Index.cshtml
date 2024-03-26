@@ -27,6 +27,7 @@
                     <tbody>
                         @foreach(var item in Model)
                         {
+                            <tr>
                             <td>@item.Name</td>
                             <td>@item.Description</td>
                             <td>@item.Quantity</td>
@@ -35,6 +36,7 @@
                             <td>
                                 <a asp-controller="Auction" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-warning">Detail</a>
                             </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
