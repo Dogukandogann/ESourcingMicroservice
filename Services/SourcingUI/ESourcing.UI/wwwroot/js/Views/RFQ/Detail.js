@@ -17,6 +17,11 @@ connection.start().then(function () {
     return console.error(err.toString());
 })
 
+connection.on("Bids", function (user, bid) {
+
+    addBidToTable(user, bid);
+})
+
 document.getElementById("SendButton").addEventListener("click", function (event) {
     var user = document.getElementById("SellerUserName").value;
     var productId = document.getElementById("ProductId").value;
@@ -32,6 +37,19 @@ document.getElementById("SendButton").addEventListener("click", function (event)
     SendBid(sendBidRequest);
     event.preventDefault();
 });
+function addBidToTable(user, bid) {
+    var str = "<tr>";
+    str += "<td>" + user + "<td>"
+    str += "<td>" + bid + "<td>"
+    str += "</tr>";
+
+    if ($('table > tbody > tr:first').length > 0) {
+        $('table > tbody > tr:first').before(str);
+    }
+    else {
+        $('.bidLine').append(str);
+    }
+}
 
 function SendBid(model) {
 
