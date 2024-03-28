@@ -1,6 +1,7 @@
 ﻿using ESourcing.Core.Entities;
 using ESourcing.UI.VievModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -38,9 +39,12 @@ namespace ESourcing.UI.Controllers
                     await _signInManager.SignOutAsync();
                     var result = await _signInManager.PasswordSignInAsync(user,loginVM.Password,false,false);
                     if (result.Succeeded)
+                    {
 
-                        //return RedirectToAction("Index");
-                    return LocalRedirect(returnUrl);
+                        HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
+                        return LocalRedirect(returnUrl);
+                    }
+
                     else
                         ModelState.AddModelError("", "Email address or password is not valid");
                 }

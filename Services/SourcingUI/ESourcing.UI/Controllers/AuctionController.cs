@@ -1,6 +1,8 @@
 ﻿using ESourcing.Core.Repositories;
+using ESourcing.Core.ResultModels;
 using ESourcing.UI.Clients;
 using ESourcing.UI.VievModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -59,7 +61,22 @@ namespace ESourcing.UI.Controllers
             model.AuctionId = auctionResponse.Data.Id;
             model.ProductId = auctionResponse.Data.ProductId;
             model.Bids = bidsReponse.Data;
+            var isAdmin = HttpContext.Session.GetString("IsAdmin");
+            model.IsAdmin = Convert.ToBoolean(isAdmin);
             return View(model);
+        }
+        [HttpPost]
+        public async Task<Result<string>> SendBid(BidVM model)
+        {
+            model.CreatedAt = DateTime.Now;
+            var sendBidResponse = await _bidClient.SendBid(model);
+            return sendBidResponse;
+        }
+        [HttpPost]
+        public async Task<Result<string>> CompleteBid(string id)
+        {
+            var sendBidResponse = await _auctionClient.CompleteBid(id);
+            return sendBidResponse;
         }
     }
     

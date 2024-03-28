@@ -63,5 +63,18 @@ namespace ESourcing.UI.Clients
             }
             return new Result<AuctionVM>(false, ResultConstant.RecordNotFound);
         }
+        public async Task<Result<string>> CompleteBid(string id)
+        {
+            var dataAsString = JsonConvert.SerializeObject(id);
+            var content = new StringContent(dataAsString);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await _client.PostAsync("/Auction/CompleteAuction", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                return new Result<string>(true, ResultConstant.RecordCreatedSuccessfully, responseData);
+            }
+            return new Result<string>(false, ResultConstant.RecordNotCreatSuccessfully);
+        }
     }
 }

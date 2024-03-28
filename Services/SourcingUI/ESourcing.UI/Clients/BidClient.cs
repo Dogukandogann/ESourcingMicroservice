@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace ESourcing.UI.Clients
@@ -30,6 +31,19 @@ namespace ESourcing.UI.Clients
                 return new Result<List<BidVM>>(false, ResultConstant.RecordNotFound);
             }
             return new Result<List<BidVM>>(false, ResultConstant.RecordNotFound);
+        }
+        public async Task<Result<string>> SendBid(BidVM model)
+        {
+            var dataAsString = JsonConvert.SerializeObject(model);
+            var content = new StringContent(dataAsString);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await _client.PostAsync("/Bid", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                return new Result<string>(true, ResultConstant.RecordCreatedSuccessfully, responseData);
+            }
+            return new Result<string>(false, ResultConstant.RecordNotCreatSuccessfully);
         }
     }
 }

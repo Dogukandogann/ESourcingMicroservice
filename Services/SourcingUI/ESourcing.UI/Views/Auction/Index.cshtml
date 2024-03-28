@@ -21,21 +21,30 @@
                             <th>Quantity</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach (var item in Model)
                         {
                             <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Description</td>
-                            <td>@item.Quantity</td>
-                            <td>@item.StartedAt.ToShortDateString()</td>
-                            <td>@item.FinishedAt.ToShortDateString()</td>
-                            <td>
-                                <a asp-controller="Auction" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-warning">Detail</a>
-                            </td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.StartedAt.ToShortDateString()</td>
+                                <td>@item.FinishedAt.ToShortDateString()</td>
+                                <td>@item.Status</td>
+                                <td>
+                                    @if (item.Status == 1)
+                                    {
+                                        <a asp-route-Id="@item.Id" class="btn btn-danger">Closed</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Auction" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-warning">Detail</a>
+                                    }
+                                </td>
                             </tr>
                         }
                     </tbody>
