@@ -43,7 +43,7 @@ namespace ESourcing.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AuctionVM model)
         {
-            model.Status = 1;
+            model.Status = default(int);
             model.CreatedAt = DateTime.Now;
             var createAuction = await _auctionClient.CreateAuction(model);
             if (createAuction.IsSuccess)

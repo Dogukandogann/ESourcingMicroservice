@@ -17,11 +17,11 @@ namespace ESourcing.UI.Clients
         public BidClient(HttpClient client)
         {
             _client = client;
-            client.BaseAddress = new Uri(CommonInfo.LocalAuctionBaseAddress);
+            client.BaseAddress = new Uri(CommonInfo.BaseAddress);
         }
         public async Task<Result<List<BidVM>>> GetAllBidsByAuctionId(string id)
         {
-            var response = await _client.GetAsync("/api/v1/Bid/GetBidByAuctionId?id=" + id);
+            var response = await _client.GetAsync("/Bid/GetBidByAuctionId?id=" + id);
             if (response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadAsStringAsync();
