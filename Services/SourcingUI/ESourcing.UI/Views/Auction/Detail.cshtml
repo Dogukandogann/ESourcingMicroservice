@@ -1,0 +1,62 @@
+﻿@model AuctionBidsVM;
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Quick Auction</h3>
+            </div>
+            <form action="/" method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputPrice"></label>
+                        <input type="number" class="form-control" id="exampleInputPrice" placeholder="Enter Price" />
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" id="SendButton" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-header" style="background-color:darkgray">
+            <h3 class="card-title">Active Auction Detail</h3>
+        </div>
+        @Html.HiddenFor(x => x.AuctionId);
+        @Html.HiddenFor(x => x.ProductId);
+        @Html.HiddenFor(x => x.SellerUserName);
+        <div class="card-body">
+            <table id="exampleAuction" class="table table-bordered table-hover">
+                <thead>
+                    <tr style="background-color:darkgray">
+                        <th>Auction User Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody class="bidLine">
+                    @if (Model.Bids != null)
+                    {
+                        @foreach(var bid in Model.Bids)
+                        {
+                            <tr>
+                                <td>@bid.SellerUserName</td>
+                                <td>@bid.Price</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<button type="submit" id="FinishButton" class="btn btn-primary">Finish RFQ</button>
+<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script src="~/js/views/rfq/detail.js"></script>
+

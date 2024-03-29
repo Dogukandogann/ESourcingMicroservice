@@ -1,4 +1,5 @@
 using ESourcing.Sourcing.Data;
+using ESourcing.Sourcing.Hubs;
 using ESourcing.Sourcing.Repository;
 using ESourcing.Sourcing.Repository.Interfaces;
 using ESourcing.Sourcing.Settings;
@@ -52,17 +53,31 @@ namespace ESourcing.Sourcing
             {
                 var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
                 var factory = new ConnectionFactory() { HostName = Configuration["EventBus:HostName"] };
-                var retryCount = 5;
-                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:UserName"]) && !string.IsNullOrWhiteSpace(Configuration["EventBus:Password"]) && !string.IsNullOrWhiteSpace(Configuration["EventBus:RetryCount"]))
+                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:UserName"]))
                 {
                     factory.UserName = Configuration["EventBus:UserName"];
-                    factory.Password = Configuration["EventBus:Password"];
+                }
+
+                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:Password"]))
+                {
+                    factory.UserName = Configuration["EventBus:Password"];
+                }
+
+                var retryCount = 5;
+                if (!string.IsNullOrWhiteSpace(Configuration["EventBus:RetryCount"]))
+                {
                     retryCount = int.Parse(Configuration["EventBus:RetryCount"]);
                 }
-                
+
                 return new DefaultRabbitMQPersistentConnection(factory,retryCount,logger);
             });
             services.AddSingleton<EventBusRabbitMQProducer>();
+            services.AddCors(o=>o.AddPolicy("CorsPolicy",builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:44334");
+                
+            }));
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,9 +92,11 @@ namespace ESourcing.Sourcing
 
             app.UseAuthorization();
             app.UseDeveloperExceptionPage();
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<AuctionHub>("/auctionhub");
                 endpoints.MapControllers();
             });
 
@@ -88,6 +105,7 @@ namespace ESourcing.Sourcing
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sourcing API V1");
             });
+            
         }
     }
 }
