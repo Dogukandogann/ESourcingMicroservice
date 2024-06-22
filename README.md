@@ -38,15 +38,6 @@
   <li>Altyapı ve Dağıtım Araçları:Docker,Docker Compose</li>
 </ul>
 
-<h2>Resimler</h2>
-<h3>Mimari Yapı</h3>
-<img src="https://github.com/Dogukandogann/ESourcingMicroservice/assets/134203440/fa25dccc-b62d-48cf-a3ff-9843fa9141f9" alt="1" style="max-width: 100%;">
-<h3>Gerçek Zamanlı Teklif Verme</h3>
-<img src="https://github.com/Dogukandogann/ESourcingMicroservice/assets/134203440/3ce0b45a-ce68-4928-837a-adaf61fa3acd" alt="1" style="max-width: 100%;">
-<h3>Müzayede Durum Kontrol Ekranı</h3>
-<img src="https://github.com/Dogukandogann/ESourcingMicroservice/assets/134203440/9f41817c-dae7-43d6-83de-017a331092cf" alt="1" style="max-width: 100%;">
-
-
 <h1>English</h1>
 
 <h1>Online Auction Site</h1>
